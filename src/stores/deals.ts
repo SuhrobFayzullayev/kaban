@@ -45,10 +45,15 @@ export const useDealsStore = defineStore('deals', () => {
   const updateOne = async (id: number, payload: zod.infer<typeof schema>) => {
     loading.value = true
 
+    console.log(payload)
+
     try {
       const response = await DATABASE.updateDocument(DATABASE_ID, DEALS, id as any, payload)
+      if (response) {
+        ElMessage.success('Success')
 
-      if (response) ElMessage.success('Success')
+        await columnsStore.fetchAll()
+      }
     } catch (error: unknown) {
       const { data, statusCode } = error as { statusCode: number; data?: any }
 

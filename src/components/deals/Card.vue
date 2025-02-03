@@ -23,13 +23,13 @@ setFieldValue('name', props.label)
 </script>
 
 <template>
-  <div class="flex justify-between gap-[10px]">
+  <div  class="flex items-center justify-between gap-x-[10px]">
     <ElForm class="w-full" @submit="onSubmit">
       <FInput name="name" />
     </ElForm>
 
     <!-- delete btn -->
-    <div class="w-max">
+    <div class="-mt-4 w-max">
       <button
         type="button"
         @click="store.deleteOne(props.id)"
