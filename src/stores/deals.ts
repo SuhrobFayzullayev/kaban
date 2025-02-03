@@ -2,42 +2,34 @@ import * as zod from 'zod'
 import { Query } from 'appwrite'
 import { objectGetAllValue } from '~/helpers/functions'
 import { DATABASE, UNIQUE_ID } from '~/libs/appwrite'
-import { DATABASE_ID, COLUMNS } from '~/constants'
+import { DATABASE_ID, COLUMNS, DEALS } from '~/constants'
 
 export const schema = zod.object({
   name: zod.string().trim().nonempty('Required'),
 })
 
-export const dealSchema = zod.object({
-  name: zod.string().trim().nonempty('Required'),
-})
-
 export interface Response extends zod.infer<typeof schema> {
   $id: number
-  deals: any[]
 }
 
-export const useColumnsStore = defineStore('columns', () => {
-  const { getAccessToken } = useCookieStore()
-
+export const useDealsStore = defineStore('deals', () => {
   const loading = ref<boolean>(false)
   const items = ref<Response[]>([])
+  const columnsStore = useColumnsStore()
 
-  const createOne = async (payload: zod.infer<typeof schema>, onSuccess: () => void) => {
+  const createOne = async (column_id: string | number, payload: zod.infer<typeof schema>, onSuccess: () => void) => {
     loading.value = true
 
     try {
-      const response = await DATABASE.createDocument(DATABASE_ID, COLUMNS, UNIQUE_ID.unique(), {
+      const response = await DATABASE.createDocument(DATABASE_ID, DEALS, UNIQUE_ID.unique(), {
         ...payload,
-        user_id: getAccessToken(),
-        deals: [],
+        columns: column_id,
       })
 
       if (response) {
         ElMessage.success('Success')
         onSuccess()
-
-        await fetchAll()
+        await columnsStore.fetchAll()
       }
     } catch (error: unknown) {
       const { data, statusCode } = error as { statusCode: number; data?: any }
@@ -50,26 +42,11 @@ export const useColumnsStore = defineStore('columns', () => {
     }
   }
 
-  const fetchAll = async () => {
-    loading.value = true
-
-    try {
-      const { documents } = await DATABASE.listDocuments(DATABASE_ID, COLUMNS, [
-        Query.equal('user_id', getAccessToken() as string),
-      ])
-
-      if (documents) items.value = documents as unknown as Response[]
-    } catch (error: unknown) {
-    } finally {
-      loading.value = false
-    }
-  }
-
   const updateOne = async (id: number, payload: zod.infer<typeof schema>) => {
     loading.value = true
 
     try {
-      const response = await DATABASE.updateDocument(DATABASE_ID, COLUMNS, id as any, payload)
+      const response = await DATABASE.updateDocument(DATABASE_ID, DEALS, id as any, payload)
 
       if (response) ElMessage.success('Success')
     } catch (error: unknown) {
@@ -83,16 +60,16 @@ export const useColumnsStore = defineStore('columns', () => {
     }
   }
 
-  const deleteOne = async (id: number) => {
+  const deleteOne = async (id: number | string) => {
     loading.value = true
 
     try {
-      const response = await DATABASE.deleteDocument(DATABASE_ID, COLUMNS, id as any)
+      const response = await DATABASE.deleteDocument(DATABASE_ID, DEALS, id as any)
 
       if (response) {
         ElMessage.success('Success')
 
-        await fetchAll()
+        await columnsStore.fetchAll()
       }
     } catch (error: unknown) {
     } finally {
@@ -104,7 +81,6 @@ export const useColumnsStore = defineStore('columns', () => {
     loading,
     items,
     createOne,
-    fetchAll,
     updateOne,
     deleteOne,
   }

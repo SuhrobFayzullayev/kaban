@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
 
     try {
-      await ACCOUNT.create(UNIQUE_ID, payload.email, payload.password, payload.name)
+      await ACCOUNT.create(UNIQUE_ID.unique(), payload.email, payload.password, payload.name)
       await login(payload)
     } catch (error: unknown) {
       const { data, statusCode } = error as { statusCode: number; data?: any }
