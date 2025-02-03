@@ -22,16 +22,6 @@ export const useColumnsStore = defineStore('columns', () => {
   const createOne = async (payload: zod.infer<typeof schema>, onSuccess: () => void) => {
     loading.value = true
 
-    const formData = new FormData()
-    let key: keyof typeof payload
-    for (key in payload) {
-      const value = payload[key]
-      if (value !== null && value !== undefined) {
-        if (Array.isArray(value)) formData.append(key, JSON.stringify(value))
-        else formData.append(key, value as string)
-      }
-    }
-
     try {
       const response = await DATABASE.createDocument(DATABASE_ID, COLUMNS, UNIQUE_ID, {
         ...payload,
@@ -74,18 +64,14 @@ export const useColumnsStore = defineStore('columns', () => {
   const updateOne = async (id: number, payload: zod.infer<typeof schema>) => {
     loading.value = true
 
-    const formData = new FormData()
-    let key: keyof typeof payload
-    for (key in payload) {
-      const value = payload[key]
-      if (value !== null && value !== undefined) {
-        if (Array.isArray(value)) formData.append(key, JSON.stringify(value))
-        else formData.append(key, value as string)
-      }
-    }
-    formData.append('_method', 'PUT')
-
     try {
+      const response = await DATABASE.updateDocument(DATABASE_ID, COLUMNS, id as any, payload)
+
+      if (response) {
+        ElMessage.success('Success')
+
+        await fetchAll()
+      }
     } catch (error: unknown) {
       const { data, statusCode } = error as { statusCode: number; data?: any }
 
