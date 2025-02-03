@@ -1,0 +1,77 @@
+{
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "author": "Suhrob Fayzullayev",
+  "engines": {
+    "node": ">=22.13.1"
+  },
+  "scripts": {
+    "analyze": "npx nuxi analyze",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "nuxt prepare",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "cleanup": "nuxt cleanup && pnpm postinstall",
+    "upgrade:nuxt": "nuxt upgrade --force",
+    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lf": "pnpm lint:fix && pnpm format:fix",
+    "reinstall": "rm -rf node_modules .nuxt .output pnpm-lock.yaml && pnpm install",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "0.9.0",
+    "@vee-validate/nuxt": "4.15.0",
+    "@vee-validate/zod": "4.15.0",
+    "@vueuse/core": "12.5.0",
+    "@vueuse/nuxt": "12.5.0",
+    "@vueuse/router": "12.5.0",
+    "nuxt": "^3.15.3",
+    "nuxt-appwrite": "1.1.1",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.6.1",
+    "@commitlint/config-conventional": "19.6.0",
+    "@egoist/tailwindcss-icons": "1.9.0",
+    "@element-plus/nuxt": "1.1.1",
+    "@iconify-json/ep": "1.2.2",
+    "@nuxt/devtools": "1.5.2",
+    "@sarast/eslint-config": "1.8.1",
+    "@types/node": "22.12.0",
+    "autoprefixer": "10.4.20",
+    "dotenv": "16.4.7",
+    "element-plus": "2.9.3",
+    "eslint": "9.19.0",
+    "eslint-config-prettier": "10.0.1",
+    "eslint-plugin-prettier": "5.2.3",
+    "husky": "9.1.7",
+    "lint-staged": "15.4.2",
+    "nuxt-svgo": "4.0.12",
+    "postcss": "8.5.1",
+    "prettier": "3.4.2",
+    "prettier-plugin-tailwindcss": "0.6.11",
+    "rimraf": "6.0.1",
+    "sass": "1.83.4",
+    "simple-git-hooks": "2.11.1",
+    "tailwindcss": "3.4.12",
+    "vitest": "3.0.4"
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx --no -- commitlint --edit \"$1\"",
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "pnpm format",
+    "*.{vue,js,cjs,mjs,ts,cts,mts,json,md,yaml}": "pnpm lint"
+  }
+}

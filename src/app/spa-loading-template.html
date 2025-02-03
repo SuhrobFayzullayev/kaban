@@ -1,0 +1,47 @@
+<!-- https://github.com/barelyhuman/snips/blob/dev/pages/css-loader.md -->
+<div class="loader"></div>
+<style>
+    body {
+        background-color: #ecf2f7;
+    }
+
+    .loader {
+        display: block;
+        position: fixed;
+        z-index: 1031;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        box-sizing: border-box;
+        border: solid 2px transparent;
+        border-top-color: #0c91de;
+        border-left-color: #0c91de;
+        border-bottom-color: #0c91de81;
+        border-right-color: #0c91de81;
+        border-radius: 50%;
+        -webkit-animation: loader 400ms linear infinite;
+        animation: loader 400ms linear infinite;
+    }
+
+    @-webkit-keyframes loader {
+        0% {
+            -webkit-transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    @keyframes loader {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+</style>

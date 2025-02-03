@@ -1,0 +1,95 @@
+// variables
+// colors
+$cwhite: #fff;
+$cblack: #1d1d1d;
+$clight: #eef2f6;
+$cblue: #1a7fdb;
+$cgreen: #3bc349;
+$cyellow: #ffd700;
+$cred: #ff060f;
+
+// fonts
+$fontFamily: 'Nunito';
+
+// element
+$form-item-margin-bottom: (
+  'large': 20px,
+);
+
+$form-item-label-top-margin-bottom: (
+  'large': 6px,
+);
+
+.el-form-item label {
+  font-size: 16px;
+  font-weight: 700;
+  color: $cblack;
+}
+
+body {
+  font-family: $fontFamily, sans-serif !important;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: $cblue;
+}
+
+[type='text'],
+[type='email'],
+[type='password'],
+[type='number'],
+[type='tel'],
+[multiple],
+textarea,
+select {
+  &.el-input__inner:focus {
+    box-shadow: none;
+    border: none;
+  }
+}
+
+// Remove Spinner Controls for Number Inputs
+input[type='number'] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  & {
+    -moz-appearance: textfield;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-webkit-autofill::first-line {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: $cblack;
+  transition: background-color 5000s ease-in-out 0s;
+  animation: autofill 0s forwards;
+}
+
+:-internal-autofill-previewed {
+  font-size: 16px !important;
+}
+
+@keyframes autofill {
+  100% {
+    font-size: 16px;
+  }
+}
+
+@-webkit-keyframes autofill {
+  100% {
+    font-size: 16px;
+  }
+}
