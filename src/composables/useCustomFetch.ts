@@ -3,11 +3,11 @@ export default function useCustomFetch() {
   const { getAccessToken } = useCookieStore()
 
   const baseFetch = $fetch.create({
-    baseURL: `${apiURL}/api/v1`,
+    baseURL: `${apiURL}/api/`,
   })
 
   const authFetch = $fetch.create({
-    baseURL: `${apiURL}/api/v1`,
+    baseURL: `${apiURL}/api/`,
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
     },

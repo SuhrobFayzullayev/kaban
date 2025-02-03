@@ -8,10 +8,6 @@ export const schema = zod.object({
   name: zod.string().trim().nonempty('Required'),
 })
 
-export const dealSchema = zod.object({
-  name: zod.string().trim().nonempty('Required'),
-})
-
 export interface Response extends zod.infer<typeof schema> {
   $id: number
   deals: any[]

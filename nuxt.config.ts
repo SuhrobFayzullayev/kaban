@@ -38,8 +38,8 @@ export default defineNuxtConfig({
         process.env.NODE_ENV === 'production'
           ? process.env.NUXT_BASE_URL_PRODUCTION
           : process.env.NUXT_BASE_URL_DEVELOPMENT,
-      storageURL: process.env.NUXT_BASE_ASSET_URL,
-      tinymceKEY: process.env.NUXT_BASE_TINYMCE_KEY,
+      APPWRITE_CLOUD_URL: process.env.NUXT_APPWRITE_CLOUD_URL,
+      APPWRITE_PROJECT_ID: process.env.NUXT_APPWRITE_PROJECT_ID,
     },
   },
   vite: {
